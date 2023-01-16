@@ -28,3 +28,5 @@ check:
 selfcheck:
 	poetry check
 
+.PHONY: install test lint selfcheck check build
+
