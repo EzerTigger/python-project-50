@@ -3,4 +3,4 @@
 ![Action Status](https://github.com/EzerTigger/python-project-50/actions/workflows/my_workflow.yml/badge.svg)
 <a href="https://codeclimate.com/github/EzerTigger/python-project-50/maintainability"><img src="https://api.codeclimate.com/v1/badges/caa0b76920f59f6618d1/maintainability" /></a>
 <a href="https://codeclimate.com/github/EzerTigger/python-project-50/test_coverage"><img src="https://api.codeclimate.com/v1/badges/caa0b76920f59f6618d1/test_coverage" /></a>
-[![asciicast](https://asciinema.org/a/551144.svg)](https://asciinema.org/a/551144)
+[![asciicast](https://asciinema.org/a/LEmJ4m4OisZXYPM9BhZ2Ox8oj.svg)](https://asciinema.org/a/LEmJ4m4OisZXYPM9BhZ2Ox8oj)

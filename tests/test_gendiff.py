@@ -1,11 +1,11 @@
 from gendiff.gendiff import generate_diff
-from fixtures.fixture_gendiff import RESULT
+from fixtures.fixture_gendiff import RESULT, file1_json, file2_json, file1_yaml, file2_yaml
 
 
-file1 = 'gendiff/files/file1.json'
-file2 = 'gendiff/files/file2.json'
+def test_generate_diff_json():
+    assert generate_diff(file1_json, file2_json) == RESULT
 
 
-def test_generate_diff():
-    assert generate_diff(file1, file2) == RESULT
+def test_generate_diff_yaml():
+    assert generate_diff(file1_yaml, file2_yaml) == RESULT
 

@@ -1,22 +1,8 @@
-import json
-import argparse
-
-
-# file1 = json.load(open('files/file1.json'))
-#  file2 = json.load(open('files/file2.json'))
-
-
-def parse():
-    parser = argparse.ArgumentParser(
-        description='Compares two configuration files and shows a difference.')
-    parser.add_argument('first_file', type=str)
-    parser.add_argument('second_file', type=str)
-    parser.add_argument('-f', '--format', help='set format of output')
-    args = parser.parse_args()
-    return args
+from gendiff.parsing import parsing_files
 
 
 def stringify(value):
+    """Get dict and return it as string"""
 
     def foo(current_value):
         result = "{\n"
@@ -34,6 +20,8 @@ def stringify(value):
 
 
 def bool_to_lower_case(dict_):
+    """Convert True and False to lowercase string"""
+
     lower = {True: 'true', False: 'false'}
     for k, v in dict_.items():
         if v in lower:
@@ -42,8 +30,7 @@ def bool_to_lower_case(dict_):
 
 
 def generate_diff(first_file, second_file):
-    file_1 = json.load(open(first_file))
-    file_2 = json.load(open(second_file))
+    file_1, file_2 = parsing_files(first_file, second_file)
     result_dict = {}
     keys = sorted(set(list(file_1.keys()) + list(file_2.keys())))
     for key in keys:
@@ -60,7 +47,7 @@ def generate_diff(first_file, second_file):
 
 
 """
-Напишите тесты, проверяющие корректность сравнения плоских JSON-файлов.
+
 Проблемы:
 
 """
