@@ -12,4 +12,4 @@ def parsing_files(first_file, second_file):
     return file_1, file_2
 
 
-#print(parsing_files('files/file1.json', 'files/file2.json'))
+# print(parsing_files('files/file1.json', 'files/file2.json'))
