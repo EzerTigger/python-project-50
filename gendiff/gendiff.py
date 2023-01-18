@@ -24,8 +24,11 @@ def bool_to_lower_case(dict_):
 
     lower = {True: 'true', False: 'false'}
     for k, v in dict_.items():
-        if v in lower:
-            dict_[k] = lower[v]
+        if isinstance(v, dict):
+            bool_to_lower_case(v)
+        else:
+            if v in lower:
+                dict_[k] = lower[v]
     return dict_
 
 
@@ -49,6 +52,6 @@ def generate_diff(first_file, second_file):
 """
 
 Проблемы:
-
+Валятся тесты
 """
 # print(generate_diff('files/file1.json', 'files/file2.json'))

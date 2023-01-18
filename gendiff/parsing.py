@@ -10,3 +10,6 @@ def parsing_files(first_file, second_file):
         file_1 = json.load(open(first_file))
         file_2 = json.load(open(second_file))
     return file_1, file_2
+
+
+#print(parsing_files('files/file1.json', 'files/file2.json'))
