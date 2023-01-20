@@ -38,14 +38,14 @@ def generate_diff(first_file, second_file):
     keys = sorted(set(list(file_1.keys()) + list(file_2.keys())))
     for key in keys:
         if key not in file_1:
-            result_dict[f" + {key}"] = file_2[key]
+            result_dict[f"  + {key}"] = file_2[key]
         elif key not in file_2:
-            result_dict[f" - {key}"] = file_1[key]
+            result_dict[f"  - {key}"] = file_1[key]
         elif file_1[key] != file_2[key]:
-            result_dict[f" - {key}"] = file_1[key]
-            result_dict[f" + {key}"] = file_2[key]
+            result_dict[f"  - {key}"] = file_1[key]
+            result_dict[f"  + {key}"] = file_2[key]
         else:
-            result_dict[f"   {key}"] = file_1[key]
+            result_dict[f"    {key}"] = file_1[key]
     return stringify(bool_to_lower_case(result_dict))
 
 
