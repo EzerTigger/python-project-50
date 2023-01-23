@@ -54,4 +54,4 @@ def generate_diff(first_file, second_file):
 Проблемы:
 Валятся тесты
 """
-# print(generate_diff('files/flat/file1.json', 'files/flat/file1.json'))
+# print(generate_diff('tests/fixtures/flat/file1.json', 'tests/fixtures/flat/file1.json'))
