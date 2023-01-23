@@ -47,11 +47,3 @@ def generate_diff(first_file, second_file):
         else:
             result_dict[f"    {key}"] = file_1[key]
     return stringify(bool_to_lower_case(result_dict))
-
-
-"""
-
-Проблемы:
-Валятся тесты
-"""
-
