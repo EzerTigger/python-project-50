@@ -1,28 +1,30 @@
+import itertools
+
 from gendiff.parsing import parsing_files
 
 
-def stringify(value):
-    """Get dict and return it as string"""
+def stringify(value, replacer='   ', spaces_count=1):
 
-    def foo(current_value):
-        result = "{\n"
-        if type(current_value) == dict:
-            for e in current_value:
-                if type(current_value[e]) == dict:
-                    result += f"{e}: {foo(current_value[e])}\n"
-                else:
-                    result += f'{e}: {current_value[e]}\n'
-        else:
+    def iter_(current_value, depth):
+        if not isinstance(current_value, dict):
             return str(current_value)
-        return result + '}'
 
-    return foo(value)
+        deep_indent_size = depth + spaces_count
+        deep_indent = replacer * deep_indent_size
+        current_indent = replacer * depth
+        lines = []
+        for key, val in current_value.items():
+            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')
+        result = itertools.chain("{", lines, [current_indent + "}"])
+        return '\n'.join(result)
+
+    return iter_(value, 0)
 
 
 def bool_to_lower_case(dict_):
     """Convert True and False to lowercase string"""
 
-    lower = {True: 'true', False: 'false'}
+    lower = {True: 'true', False: 'false', None: 'null'}
     for k, v in dict_.items():
         if isinstance(v, dict):
             bool_to_lower_case(v)
@@ -34,16 +36,26 @@ def bool_to_lower_case(dict_):
 
 def generate_diff(first_file, second_file):
     file_1, file_2 = parsing_files(first_file, second_file)
-    result_dict = {}
-    keys = sorted(set(list(file_1.keys()) + list(file_2.keys())))
-    for key in keys:
-        if key not in file_1:
-            result_dict[f"  + {key}"] = file_2[key]
-        elif key not in file_2:
-            result_dict[f"  - {key}"] = file_1[key]
-        elif file_1[key] != file_2[key]:
-            result_dict[f"  - {key}"] = file_1[key]
-            result_dict[f"  + {key}"] = file_2[key]
-        else:
-            result_dict[f"    {key}"] = file_1[key]
-    return stringify(bool_to_lower_case(result_dict))
+
+    def diff_dict(dict1, dict2):
+        result = {}
+        keys = sorted(set(list(dict1.keys()) + list(dict2.keys())))
+        for key in keys:
+            if key not in dict2:
+                result[f'- {key}'] = dict1[key]
+            elif key in dict1 and key in dict2:
+                if dict1[key] == dict2[key]:
+                    result[f'  {key}'] = dict1[key]
+                else:
+                    if isinstance(dict1[key], dict) and isinstance(dict2[key],
+                                                                   dict):
+                        result[key] = diff_dict(dict1[key], dict2[key])
+                    else:
+                        result[f'- {key}'] = dict1[key]
+                        result[f'+ {key}'] = dict2[key]
+
+            else:
+                result[f'+ {key}'] = dict2[key]
+        return result
+
+    return stringify(bool_to_lower_case(diff_dict(file_1, file_2)))

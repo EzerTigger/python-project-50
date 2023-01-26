@@ -1,11 +1,19 @@
 from gendiff.gendiff import generate_diff
 from fixtures.fixture_gendiff import file1_json_flat, file2_json_flat, file1_yaml_flat, file2_yaml_flat
+from fixtures.fixture_gendiff import file1_json_nested, file2_json_nested, file1_yaml_nested, file2_yaml_nested
 
 
 def test_generate_diff_flat():
-    with open('tests/fixtures/tester.txt', 'r') as f:
+    with open('tests/fixtures/tester_flat.txt', 'r') as f:
         expected = f.read()
 
     assert generate_diff(file1_json_flat, file2_json_flat) == expected
     assert generate_diff(file1_yaml_flat, file2_yaml_flat) == expected
 
+
+def test_generate_diff_nested():
+    with open('tests/fixtures/tester_nested.txt', 'r') as f:
+        expected = f.read()
+
+    assert generate_diff(file1_json_nested, file2_json_nested) == expected
+    assert generate_diff(file1_yaml_nested, file2_yaml_nested) == expected
