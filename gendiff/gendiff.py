@@ -3,8 +3,7 @@ import itertools
 from gendiff.parsing import parsing_files
 
 
-def stringify(value, replacer='   ', spaces_count=1):
-
+def stylish(value, replacer=' ', spaces_count=4):
     def iter_(current_value, depth):
         if not isinstance(current_value, dict):
             return str(current_value)
@@ -14,7 +13,19 @@ def stringify(value, replacer='   ', spaces_count=1):
         current_indent = replacer * depth
         lines = []
         for key, val in current_value.items():
-            lines.append(f'{deep_indent}{key}: {iter_(val, deep_indent_size)}')
+            if key[0] == '+':
+                new_deep = deep_indent[:-2]
+                action = '+ '
+                new_key = key[2:]
+            elif key[0] == '-':
+                new_deep = deep_indent[:-2]
+                action = '- '
+                new_key = key[2:]
+            else:
+                new_deep = deep_indent
+                action = ''
+                new_key = key
+            lines.append(f'{new_deep}{action}{new_key}: {iter_(val, deep_indent_size)}')
         result = itertools.chain("{", lines, [current_indent + "}"])
         return '\n'.join(result)
 
@@ -45,7 +56,7 @@ def generate_diff(first_file, second_file):
                 result[f'- {key}'] = dict1[key]
             elif key in dict1 and key in dict2:
                 if dict1[key] == dict2[key]:
-                    result[f'  {key}'] = dict1[key]
+                    result[f'{key}'] = dict1[key]
                 else:
                     if isinstance(dict1[key], dict) and isinstance(dict2[key],
                                                                    dict):
@@ -58,4 +69,6 @@ def generate_diff(first_file, second_file):
                 result[f'+ {key}'] = dict2[key]
         return result
 
-    return stringify(bool_to_lower_case(diff_dict(file_1, file_2)))
+    return stylish(bool_to_lower_case(diff_dict(file_1, file_2)))
+# В таком виде выдаёт нужный результат. Теперь нужно разбить на
+# создание дифа и представление, но не сломать.
