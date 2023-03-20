@@ -1,8 +1,10 @@
 def get_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    else:
+    if value in ['true', 'false', 'null']:
         return value
+    else:
+        return f'\'{value}\''
 
 
 def plain(value):
@@ -23,8 +25,8 @@ def plain(value):
                 lines.append(f"Property '{name}' was {action}")
                 path.pop()
             elif char['type'] == 'changed':
-                action = f"updated. From '{get_value(char['value1'])}' to " \
-                         f"'{get_value(char['value2'])}'"
+                action = f"updated. From {get_value(char['value1'])} to " \
+                         f"{get_value(char['value2'])}"
                 path.append(char['key'])
                 name = ".".join(path)
                 lines.append(f"Property '{name}' was {action}")
