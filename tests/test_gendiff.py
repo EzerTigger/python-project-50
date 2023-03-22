@@ -25,12 +25,14 @@ def test_format_plain():
     with open('tests/fixtures/tester_plain.txt', 'r') as f:
         expected = f.read()
 
-    assert generate_diff(file1_json_nested, file2_json_nested, plain) == expected
-    assert generate_diff(file1_yaml_nested, file2_yaml_nested, plain) == expected
+    assert generate_diff(file1_json_nested, file2_json_nested,
+                         'plain') == expected
+    assert generate_diff(file1_yaml_nested, file2_yaml_nested,
+                         'plain') == expected
 
 
 def test_format_json():
     with open('tests/fixtures/tester_json.json', 'r') as f:
         expected = f.read()
-    assert generate_diff(file1_json_nested, file2_json_nested, json) == expected
-    assert generate_diff(file1_yaml_nested, file2_yaml_nested, json) == expected
+    assert generate_diff(file1_json_nested, file2_json_nested, 'json') == expected
+    assert generate_diff(file1_yaml_nested, file2_yaml_nested, 'json') == expected
