@@ -2,8 +2,7 @@
 
 from gendiff.gendiff import generate_diff
 from gendiff.argparse import parse
-from gendiff.formatters.plain import plain
-from gendiff.formatters.json import json
+
 
 args = parse()
 
