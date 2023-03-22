@@ -1,5 +1,7 @@
 from gendiff.parsing import parsing_files
 from gendiff.formatters.stylish import stylish
+from gendiff.formatters.plain import plain
+from gendiff.formatters.json import json
 
 
 def bool_to_lower_case(arr):
@@ -20,7 +22,16 @@ def bool_to_lower_case(arr):
     return arr
 
 
-def generate_diff(first_file, second_file, form=stylish):
+def choose_format(data, formatter):
+    if formatter == 'plain':
+        return plain(data)
+    elif formatter == 'json':
+        return json(data)
+    elif formatter == 'stylish':
+        return stylish(data)
+
+
+def generate_diff(first_file, second_file, form='stylish'):
     file_1, file_2 = parsing_files(first_file, second_file)
 
     def diff_dict(dict1, dict2):
@@ -48,4 +59,4 @@ def generate_diff(first_file, second_file, form=stylish):
                 result.append({'type': 'add', 'key': key, 'value': dict2[key]})
         return result
 
-    return form(bool_to_lower_case(diff_dict(file_1, file_2)))
+    return choose_format(bool_to_lower_case(diff_dict(file_1, file_2)), form)
