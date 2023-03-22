@@ -7,6 +7,3 @@ file1_json_flat = 'tests/fixtures/flat/file1.json'
 file2_json_flat = 'tests/fixtures/flat/file2.json'
 file1_yaml_flat = 'tests/fixtures/flat/file1.yml'
 file2_yaml_flat = 'tests/fixtures/flat/file2.yml'
-
-
-

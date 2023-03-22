@@ -1,6 +1,4 @@
 from gendiff.gendiff import generate_diff
-from gendiff.formatters.plain import plain
-from gendiff.formatters.json import json
 from fixtures.fixture_gendiff import file1_json_flat, file2_json_flat, file1_yaml_flat, file2_yaml_flat
 from fixtures.fixture_gendiff import file1_json_nested, file2_json_nested, file1_yaml_nested, file2_yaml_nested
 
