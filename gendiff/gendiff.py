@@ -5,7 +5,7 @@ from gendiff.formatters.stylish import stylish
 def bool_to_lower_case(arr):
     """Convert True and False to lowercase string"""
 
-    lower = {True: 'true', False: 0, None: 'null'}
+    lower = {True: 'true', False: 'false', None: 'null'}
     for char in arr:
         if isinstance(char, dict):
             for k, v in char.items():
