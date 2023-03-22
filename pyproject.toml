@@ -9,11 +9,10 @@ packages = [{include = "gendiff"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 flake8 = "^5.0.4"
-
+pyyaml = "^6.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^4.0.0"
-pyyaml = "^5.4"
 pytest = "^7.2.1"
 
 [build-system]
