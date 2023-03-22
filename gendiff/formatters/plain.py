@@ -1,7 +1,7 @@
 def get_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    if value in ['true', 'false', 'null']:
+    if value in ['true', 'false', 'null'] or type(value) == int:
         return value
     else:
         return f'\'{value}\''
@@ -9,7 +9,6 @@ def get_value(value):
 
 def plain(value):
     def iter_(current_value, path):
-        action = ''
         lines = []
         for char in current_value:
             if char['type'] == 'add':
