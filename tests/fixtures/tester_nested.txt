@@ -1,6 +1,6 @@
 {
     common: {
-      + follow: false
+      + follow: 0
         setting1: Value 1
       - setting2: 200
       - setting3: true
@@ -11,7 +11,7 @@
         }
         setting6: {
             doge: {
-              - wow: false
+              - wow: 0
               + wow: so much
             }
             key: value
