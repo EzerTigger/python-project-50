@@ -34,7 +34,7 @@ def get_extension(file_name):
     extension = ''
     for i in range(len(file_name)):
         if file_name[i] == '.':
-            extension = file_name[i+1:]
+            extension = file_name[i + 1:]
     return extension
 
 
