@@ -1,10 +1,16 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "Make diff for two files (json, yaml)"
 authors = ["Sergei Ezerskii <gaftezer@gmail.com>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Programming Language :: Python :: 3"
+]
+repository = "https://github.com/EzerTigger/python-project-50"
 
 [tool.poetry.dependencies]
 python = "^3.9"
