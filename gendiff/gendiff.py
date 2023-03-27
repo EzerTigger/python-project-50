@@ -1,24 +1,23 @@
 from gendiff.parsing import parsing_files
 from gendiff.formatters.stylish import stylish
 from gendiff.formatters.plain import plain
-from gendiff.formatters.json import json
+from gendiff.formatters.json import get_json
+from gendiff.diff_dict import get_diff_dict
 
 
-def bool_to_lower_case(arr):
-    """Convert True and False to lowercase string"""
-
+def get_lower_case_bool(arr):
     for char in arr:
         if isinstance(char, dict):
-            for k, v in char.items():
-                if isinstance(v, (list, dict)):
-                    bool_to_lower_case(v)
+            for key, value in char.items():
+                if isinstance(value, (list, dict)):
+                    get_lower_case_bool(value)
                 else:
-                    if v is True:
-                        char[k] = 'true'
-                    elif v is False:
-                        char[k] = 'false'
-                    elif v is None:
-                        char[k] = 'null'
+                    if value is True:
+                        char[key] = 'true'
+                    elif value is False:
+                        char[key] = 'false'
+                    elif value is None:
+                        char[key] = 'null'
     return arr
 
 
@@ -26,37 +25,22 @@ def choose_format(data, formatter):
     if formatter == 'plain':
         return plain(data)
     elif formatter == 'json':
-        return json(data)
+        return get_json(data)
     elif formatter == 'stylish':
         return stylish(data)
 
 
+def get_extension(file_name):
+    extension = ''
+    for i in range(len(file_name)):
+        if file_name[i] == '.':
+            extension = file_name[i+1:]
+    return extension
+
+
 def generate_diff(first_file, second_file, form='stylish'):
-    file_1, file_2 = parsing_files(first_file, second_file)
-
-    def diff_dict(dict1, dict2):
-        result = []
-        keys = sorted(set(list(dict1.keys()) + list(dict2.keys())))
-        for key in keys:
-            if key not in dict2:
-                result.append({'type': 'del', 'key': key, 'value': dict1[key]})
-            elif key in dict1 and key in dict2:
-                if isinstance(dict1[key], dict) and isinstance(dict2[key],
-                                                               dict):
-                    result.append({'type': 'root', 'key': key, 'value': diff_dict(
-                        dict1[key], dict2[key])})
-                else:
-                    if dict1[key] == dict2[key]:
-                        result.append(
-                            {'type': 'no_changed', 'key': key,
-                             'value': dict1[key]})
-                    else:
-                        result.append({'type': 'changed', 'key': key,
-                                       'value1': dict1[key],
-                                       'value2': dict2[key]})
-
-            else:
-                result.append({'type': 'add', 'key': key, 'value': dict2[key]})
-        return result
-
-    return choose_format(bool_to_lower_case(diff_dict(file_1, file_2)), form)
+    first_ext = get_extension(first_file)
+    second_ext = get_extension(second_file)
+    file_1 = parsing_files(first_file, first_ext)
+    file_2 = parsing_files(second_file, second_ext)
+    return choose_format(get_lower_case_bool(get_diff_dict(file_1, file_2)), form)
