@@ -5,6 +5,7 @@ from fixtures.fixture_gendiff import file1_json_flat, file2_json_flat, file1_yam
 from fixtures.fixture_gendiff import file1_json_nested, file2_json_nested, file1_yaml_nested, file2_yaml_nested
 from gendiff.argparse import parse
 
+
 @pytest.mark.parametrize(
     ('file_1', 'file_2'),
     (
