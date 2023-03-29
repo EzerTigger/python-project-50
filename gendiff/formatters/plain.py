@@ -7,7 +7,7 @@ def get_value(value):
         return f'\'{value}\''
 
 
-def plain(value):
+def get_plain(value):
     def iter_(current_value, path):
         lines = []
         for char in current_value:

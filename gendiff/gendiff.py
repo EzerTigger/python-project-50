@@ -1,29 +1,29 @@
 from gendiff.parsing import parsing_files
 from gendiff.formatters.stylish import stylish
-from gendiff.formatters.plain import plain
+from gendiff.formatters.plain import get_plain
 from gendiff.formatters.json import get_json
 from gendiff.diff_dict import get_diff_dict
 
 
-def get_lower_case_bool(arr):
-    for char in arr:
-        if isinstance(char, dict):
-            for key, value in char.items():
+def get_lower_case_bool(tree):
+    for node in tree:
+        if isinstance(node, dict):
+            for key, value in node.items():
                 if isinstance(value, (list, dict)):
                     get_lower_case_bool(value)
                 else:
                     if value is True:
-                        char[key] = 'true'
+                        node[key] = 'true'
                     elif value is False:
-                        char[key] = 'false'
+                        node[key] = 'false'
                     elif value is None:
-                        char[key] = 'null'
-    return arr
+                        node[key] = 'null'
+    return tree
 
 
 def choose_format(data, formatter):
     if formatter == 'plain':
-        return plain(data)
+        return get_plain(data)
     elif formatter == 'json':
         return get_json(data)
     elif formatter == 'stylish':
