@@ -19,43 +19,43 @@ def stylish(value, replacer=' ', spaces_count=4):
             else:
                 return current_value
 
-        for char in current_value:
-            if char['type'] == 'add':
+        for child in current_value:
+            if child['type'] == 'add':
                 new_deep = deep_indent[:-2]
                 action = '+ '
                 lines.append(
-                    f'{new_deep}{action}{char["key"]}: '
-                    f'{iter_(char["value"], deep_indent_size)}')
-            elif char['type'] == 'del':
+                    f'{new_deep}{action}{child["key"]}: '
+                    f'{iter_(child["value"], deep_indent_size)}')
+            elif child['type'] == 'del':
                 new_deep = deep_indent[:-2]
                 action = '- '
                 lines.append(
-                    f'{new_deep}{action}{char["key"]}: '
-                    f'{iter_(char["value"], deep_indent_size)}')
-            elif char['type'] == 'no_changed':
+                    f'{new_deep}{action}{child["key"]}: '
+                    f'{iter_(child["value"], deep_indent_size)}')
+            elif child['type'] == 'no_changed':
                 new_deep = deep_indent
                 action = ''
                 lines.append(
-                    f'{new_deep}{action}{char["key"]}: '
-                    f'{iter_(char["value"], deep_indent_size)}')
-            elif char['type'] == 'changed':
+                    f'{new_deep}{action}{child["key"]}: '
+                    f'{iter_(child["value"], deep_indent_size)}')
+            elif child['type'] == 'changed':
                 new_deep = deep_indent[:-2]
                 action = '- '
                 lines.append(
-                    f'{new_deep}{action}{char["key"]}: '
-                    f'{iter_(char["value1"], deep_indent_size)}')
+                    f'{new_deep}{action}{child["key"]}: '
+                    f'{iter_(child["value1"], deep_indent_size)}')
                 new_deep = deep_indent[:-2]
                 action = '+ '
                 lines.append(
-                    f'{new_deep}{action}{char["key"]}: '
-                    f'{iter_(char["value2"], deep_indent_size)}')
+                    f'{new_deep}{action}{child["key"]}: '
+                    f'{iter_(child["value2"], deep_indent_size)}')
 
-            elif char['type'] == 'root':
+            elif child['type'] == 'root':
                 new_deep = deep_indent
                 action = ''
                 lines.append(
-                    f'{new_deep}{action}{char["key"]}: '
-                    f'{iter_(char["value"], deep_indent_size)}')
+                    f'{new_deep}{action}{child["key"]}: '
+                    f'{iter_(child["value"], deep_indent_size)}')
 
         result = itertools.chain("{", lines, [current_indent + "}"])
         return '\n'.join(result)

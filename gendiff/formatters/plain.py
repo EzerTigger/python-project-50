@@ -8,32 +8,32 @@ def get_value(value):
 
 
 def get_plain(value):
-    def iter_(current_value, path):
+    def iter_(current_value, ancestry):
         lines = []
-        for char in current_value:
-            if char['type'] == 'add':
-                action = f"added with value: {get_value(char['value'])}"
-                path.append(char['key'])
-                name = ".".join(path)
+        for child in current_value:
+            if child['type'] == 'add':
+                action = f"added with value: {get_value(child['value'])}"
+                ancestry.append(child['key'])
+                name = ".".join(ancestry)
                 lines.append(f"Property '{name}' was {action}")
-                path.pop()
-            elif char['type'] == 'del':
+                ancestry.pop()
+            elif child['type'] == 'del':
                 action = 'removed'
-                path.append(char['key'])
-                name = ".".join(path)
+                ancestry.append(child['key'])
+                name = ".".join(ancestry)
                 lines.append(f"Property '{name}' was {action}")
-                path.pop()
-            elif char['type'] == 'changed':
-                action = f"updated. From {get_value(char['value1'])} to " \
-                         f"{get_value(char['value2'])}"
-                path.append(char['key'])
-                name = ".".join(path)
+                ancestry.pop()
+            elif child['type'] == 'changed':
+                action = f"updated. From {get_value(child['value1'])} to " \
+                         f"{get_value(child['value2'])}"
+                ancestry.append(child['key'])
+                name = ".".join(ancestry)
                 lines.append(f"Property '{name}' was {action}")
-                path.pop()
-            elif char['type'] == 'root':
-                path.append(char['key'])
-                lines.append(iter_(char['value'], path))
-                path.pop()
+                ancestry.pop()
+            elif child['type'] == 'root':
+                ancestry.append(child['key'])
+                lines.append(iter_(child['value'], ancestry))
+                ancestry.pop()
         return '\n'.join(lines)
 
     return iter_(value, [])
